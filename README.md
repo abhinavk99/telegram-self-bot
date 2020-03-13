@@ -4,7 +4,7 @@ Telegram self bot written in Python. Meant for user accounts to use for utility 
 
 You'll need a file called `.env`. In it, copy paste the below:
 
-```python
+```
 # The values below won't work. Get your own values from
 # https://my.telegram.org under API development.
 API_ID=3245234
