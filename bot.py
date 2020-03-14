@@ -151,5 +151,14 @@ if __name__ == "__main__":
                 links = "\n\n".join(list(search(query, num=5, stop=5)))
                 await event.reply(links)
 
+            @client.on(
+                events.NewMessage(outgoing=True, forwards=False, pattern="-kick (.+)")
+            )
+            async def kick_handler(event):
+                user = event.pattern_match.group(1)
+
+                user_entity = await client.get_input_entity(user)
+                await client.kick_participant(event.to_id, user_entity)
+
             print("Waiting for commands!")
             client.run_until_disconnected()

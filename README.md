@@ -47,8 +47,9 @@ optional arguments:
 If you run `python bot.py` without any CLI arguments, the bot will stay open
 and wait for the commands below to be sent in Telegram.
 
-| Command | Description                                     | Usage                 | Example                  |
-| ------- | ----------------------------------------------- | --------------------- | ------------------------ |
-| -delete | Delete past n number of messages by the user    | -delete `<number>`    | `-delete 7`              |
-| -edit   | Edit the last message by the user with new text | -edit `<new content>` | `-edit Hi, I'm SelfBot.` |
-| -google | Google search                                   | -google `<query>`     | `-google news today`     |
+| Command | Description                                     | Usage                                  | Example                  |
+| ------- | ----------------------------------------------- | -------------------------------------- | ------------------------ |
+| -delete | Delete past n number of messages by the user    | -delete `<number>`                     | `-delete 7`              |
+| -edit   | Edit the last message by the user with new text | -edit `<new content>`                  | `-edit Hi, I'm SelfBot.` |
+| -google | Google search                                   | -google `<query>`                      | `-google news today`     |
+| -kick   | Kick a user from a chat                         | -kick `<user's full name or username>` | `-kick John Smith`       |
