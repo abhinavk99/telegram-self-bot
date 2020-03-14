@@ -1,6 +1,7 @@
 # telegram-self-bot
 
-Telegram self bot written in Python. Meant for user accounts to use for utility functions.
+Telegram self bot written in Python. Meant for user accounts to use for utility
+functions.
 
 You'll need a file called `.env`. In it, copy paste the below:
 
@@ -14,8 +15,8 @@ API_HASH=39489aoeui392343o43p3
 ## Usage
 
 ```
-usage: bot.py [-h] [--chats] [--chat-id CHAT_ID] [--replace REPLACE]
-              [--search SEARCH] [--delete DELETE]
+usage: python bot.py [-h] [--chats] [--chat-id CHAT_ID] [--replace REPLACE]
+                     [--search SEARCH] [--delete DELETE]
 
 Run the Telegram Self Bot
 

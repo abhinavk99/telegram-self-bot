@@ -39,15 +39,15 @@ def parse_arguments():
     return args
 
 
-def get_cannot_delete_msg(message, reason):
-    return f"Cannot delete {message.id}: {message.text}, {reason}"
+def get_cannot_edit_msg(message, reason):
+    return f"Cannot edit {message.id}: {message.text}, {reason}"
 
 
 def replace(client, args):
     chat_id, src_word, dest_word = args.replace.split()
     chat_id = int(chat_id)
 
-    undeletable_message_ids = []
+    uneditable_message_ids = []
     for message in client.iter_messages(chat_id, search=src_word, from_user="me"):
         pattern = r"(\w*%s\w*)" % src_word
         new_message = re.sub(pattern, dest_word, message.text, flags=re.IGNORECASE)
@@ -55,14 +55,14 @@ def replace(client, args):
             if message.forward is None:
                 message.edit(new_message)
             else:
-                print(get_cannot_delete_msg(message, "Message is forwarded"))
-                undeletable_message_ids.append(message.id)
+                print(get_cannot_edit_msg(message, "Message is forwarded"))
+                uneditable_message_ids.append(message.id)
         except errors.rpcbaseerrors.ForbiddenError as e:
-            print(get_cannot_delete_msg(message, f"Exception: {e}"))
-            undeletable_message_ids.append(message.id)
-    if len(undeletable_message_ids) > 0:
+            print(get_cannot_edit_msg(message, f"Exception: {e}"))
+            uneditable_message_ids.append(message.id)
+    if len(uneditable_message_ids) > 0:
         print(
-            "IDs of undeletable messages:", ",".join(map(str, undeletable_message_ids)),
+            "IDs of uneditable messages:", ",".join(map(str, uneditable_message_ids)),
         )
 
 
@@ -75,6 +75,7 @@ if __name__ == "__main__":
                 print(dialog.name, "has ID", dialog.id)
         elif args.chat_id is not None:
             chat_name = args.chat_id
+
             for dialog in client.iter_dialogs():
                 if chat_name.lower() == dialog.name.lower():
                     print(dialog.name, "has ID", dialog.id)
@@ -89,5 +90,6 @@ if __name__ == "__main__":
         elif args.delete is not None:
             chat_id, message_ids = args.delete.split()
             chat_id = int(chat_id)
+
             message_ids = list(map(int, message_ids.split(",")))
             client.delete_messages(chat_id, message_ids)
