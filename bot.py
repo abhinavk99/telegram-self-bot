@@ -102,6 +102,18 @@ if __name__ == "__main__":
             client.delete_messages(chat_id, message_ids)
         else:
 
+            @client.on(events.NewMessage(outgoing=True, pattern="-delete ([1-9]+)"))
+            async def delete_handler(event):
+                num_messages = int(event.pattern_match.group(1))
+
+                message_ids = [
+                    message.id
+                    async for message in client.iter_messages(
+                        event.to_id, limit=num_messages + 1, from_user="me"
+                    )
+                ]
+                await client.delete_messages(event.to_id, message_ids)
+
             @client.on(
                 events.NewMessage(outgoing=True, forwards=False, pattern="-edit (.+)")
             )

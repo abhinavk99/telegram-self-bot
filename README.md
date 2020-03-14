@@ -49,4 +49,5 @@ and wait for the commands below to be sent in Telegram.
 
 | Command | Description                                     | Usage                 | Example                  |
 | ------- | ----------------------------------------------- | --------------------- | ------------------------ |
+| -delete | Delete past n number of messages by the user    | -delete `<number>`    | `-delete 7`              |
 | -edit   | Edit the last message by the user with new text | -edit `<new content>` | `-edit Hi, I'm SelfBot.` |
