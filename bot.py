@@ -3,6 +3,7 @@ import os
 import re
 
 from dotenv import load_dotenv
+from googlesearch import search
 from telethon import TelegramClient, sync, errors, events
 
 load_dotenv()
@@ -102,7 +103,11 @@ if __name__ == "__main__":
             client.delete_messages(chat_id, message_ids)
         else:
 
-            @client.on(events.NewMessage(outgoing=True, pattern="-delete ([1-9]+)"))
+            @client.on(
+                events.NewMessage(
+                    outgoing=True, forwards=False, pattern="-delete ([1-9]+)"
+                )
+            )
             async def delete_handler(event):
                 num_messages = int(event.pattern_match.group(1))
 
@@ -136,6 +141,15 @@ if __name__ == "__main__":
                             await event.delete()
                         finally:
                             return
+
+            @client.on(
+                events.NewMessage(outgoing=True, forwards=False, pattern="-google (.+)")
+            )
+            async def google_handler(event):
+                query = event.pattern_match.group(1)
+
+                links = "\n\n".join(list(search(query, num=5, stop=5)))
+                await event.reply(links)
 
             print("Waiting for commands!")
             client.run_until_disconnected()

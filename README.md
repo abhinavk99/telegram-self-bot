@@ -51,3 +51,4 @@ and wait for the commands below to be sent in Telegram.
 | ------- | ----------------------------------------------- | --------------------- | ------------------------ |
 | -delete | Delete past n number of messages by the user    | -delete `<number>`    | `-delete 7`              |
 | -edit   | Edit the last message by the user with new text | -edit `<new content>` | `-edit Hi, I'm SelfBot.` |
+| -google | Google search                                   | -google `<query>`     | `-google news today`     |

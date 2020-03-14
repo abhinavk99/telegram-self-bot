@@ -8,6 +8,7 @@ verify_ssl = true
 [packages]
 telethon = "*"
 python-dotenv = "*"
+google = "*"
 
 [requires]
 python_version = "3.7"

@@ -1,8 +1,12 @@
+# Development
 test.py
 .vscode
 
 # Telethon session
 self_bot_session.session
+
+# Google search session
+.google-cookie
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
