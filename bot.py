@@ -3,7 +3,7 @@ import os
 import re
 
 from dotenv import load_dotenv
-from telethon import TelegramClient, sync, errors
+from telethon import TelegramClient, sync, errors, events
 
 load_dotenv()
 API_ID = int(os.getenv("API_ID"))
@@ -66,6 +66,13 @@ def replace(client, args):
         )
 
 
+async def async_enumerate(async_generator):
+    n = 0
+    async for item in async_generator:
+        yield (n, item)
+        n += 1
+
+
 if __name__ == "__main__":
     args = parse_arguments()
 
@@ -93,3 +100,30 @@ if __name__ == "__main__":
 
             message_ids = list(map(int, message_ids.split(",")))
             client.delete_messages(chat_id, message_ids)
+        else:
+
+            @client.on(
+                events.NewMessage(outgoing=True, forwards=False, pattern="-edit (.+)")
+            )
+            async def edit_handler(event):
+                new_message = event.pattern_match.group(1)
+
+                # Edit most recent message that isn't a forward
+                async for i, message in async_enumerate(
+                    client.iter_messages(event.to_id, from_user="me")
+                ):
+                    if i == 0:
+                        if message.id != event.id:
+                            print("Error: Most recent message isn't the -edit message")
+                    elif message.forward is None:
+                        try:
+                            await message.edit(new_message)
+                        except errors.rpcbaseerrors.ForbiddenError as e:
+                            print(get_cannot_edit_msg(message, f"Exception: {e}"))
+                        else:
+                            await event.delete()
+                        finally:
+                            return
+
+            print("Waiting for commands!")
+            client.run_until_disconnected()

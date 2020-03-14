@@ -14,6 +14,10 @@ API_HASH=39489aoeui392343o43p3
 
 ## Usage
 
+### CLI Commands
+
+These commands will be run from the command line with CLI arguments.
+
 ```
 usage: python bot.py [-h] [--chats] [--chat-id CHAT_ID] [--replace REPLACE]
                      [--search SEARCH] [--delete DELETE]
@@ -37,3 +41,12 @@ optional arguments:
                         Delete messages in a chat by IDs. For example,
                         --delete "chat_id 111,222,333"
 ```
+
+### Telegram Commands
+
+If you run `python bot.py` without any CLI arguments, the bot will stay open
+and wait for the commands below to be sent in Telegram.
+
+| Command | Description                                     | Usage                 | Example                  |
+| ------- | ----------------------------------------------- | --------------------- | ------------------------ |
+| -edit   | Edit the last message by the user with new text | -edit `<new content>` | `-edit Hi, I'm SelfBot.` |
